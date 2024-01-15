@@ -31,7 +31,7 @@ public class Racer {
         this.endTimeRace = endTimeRace;
     }
 
-    public Racer(String abbreviation, String nameRacer, String nameCar, String startTime, String endTime){
+    public Racer(String abbreviation, String nameRacer, String nameCar, String startTime, String endTime) {
         this.abbreviation = abbreviation;
         this.nameRacer = nameRacer;
         this.nameCar = nameCar;
@@ -67,13 +67,7 @@ public class Racer {
         this.endTimeRace = endTimeRace;
     }
 
-    public long duration(){
+    public long duration() {
         return endTimeRace.toNanoOfDay() - startTimeRace.toNanoOfDay();
-    }
-
-    public static Racer parse(String line){
-        String[] information = line.split("_");
-
-        return new Racer(information[0], information[1], information[2]);
     }
 }
