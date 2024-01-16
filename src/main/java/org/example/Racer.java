@@ -67,7 +67,7 @@ public class Racer {
         this.endTimeRace = endTimeRace;
     }
 
-    public long duration() {
+    public long durationBestLap() {
         return endTimeRace.toNanoOfDay() - startTimeRace.toNanoOfDay();
     }
 }

@@ -3,15 +3,15 @@ package org.example;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalTime;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RaceFileReader implements RaceData {
-    @Override
-    public Map<String, Racer> getRacers() {
+public class RaceFileReader {
+
+    public List<String> read() {
 
         try {
             Stream<String> linesAbbreviations = Files.lines(Paths.get("src/main/resources/abbreviations.txt"));
@@ -20,26 +20,33 @@ public class RaceFileReader implements RaceData {
 
             RacerParser racerParser = new RacerParser();
 
-            Map<String, Racer> racers = linesAbbreviations
-                    .map(racerParser::parse)
-                    .collect(Collectors.toMap(racer -> racer.getRacerAbbreviation(), racer -> racer));
+            Map<String, String> racers = linesAbbreviations
+                    .collect(Collectors.toMap(line -> line.substring(0,3), line -> line));
 
             linesAbbreviations.close();
 
-            lineStartRace
-                    .forEach(line -> racers.get(line.substring(0, 3)).setStartTimeRace(LocalTime.parse(line.substring(14, line.length()))));
-            lineEndRace
-                    .forEach(line -> racers.get(line.substring(0, 3)).setEndTimeRace(LocalTime.parse(line.substring(14, line.length()))));
+            lineStartRace.forEach(line -> {
+                String key = line.substring(0,3);
+                String value = racers.get(key);
+                racers.put(key,value + "_" + line.substring(3,line.length()));
+            });
 
             lineStartRace.close();
+
+            lineEndRace.forEach(line -> {
+                String key = line.substring(0,3);
+                String value = racers.get(key);
+                racers.put(key,value + "_" + line.substring(3,line.length()));
+            });
+
             lineEndRace.close();
 
-            return racers;
+            return racers.values().stream().toList();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return new HashMap<>();
+        return new ArrayList<>();
     }
 }
