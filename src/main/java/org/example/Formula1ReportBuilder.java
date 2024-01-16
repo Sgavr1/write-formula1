@@ -8,7 +8,7 @@ public class Formula1ReportBuilder {
     private static final String POINT_SEPARATOR = ".";
     public String make(List<Racer> racers, int topWinners) {
         if (racers == null) {
-            throw new IllegalArgumentException("Racers is null");
+            throw new IllegalArgumentException("Error, list of racers is null");
         }
 
         String report = "";
