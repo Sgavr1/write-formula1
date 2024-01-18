@@ -6,15 +6,15 @@ import java.util.List;
 public class Formula1ReportBuilder {
     private static final String PIPE_SEPARATOR = "|";
     private static final String POINT_SEPARATOR = ".";
-    public String make(List<Racer> racers, int topWinners) {
+    public String make(List<Racer> racers, int numberPlacesTop) {
         if (racers == null) {
-            throw new IllegalArgumentException("Error, list of racers is null");
+            throw new IllegalArgumentException("Racers is null");
         }
 
         String report = "";
 
         for (int i = 0; i< racers.size(); i++) {
-            if (i == topWinners) {
+            if (i == numberPlacesTop) {
                 report += "-".repeat(70) + "\n";
             }
 
