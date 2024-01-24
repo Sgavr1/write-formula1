@@ -17,18 +17,17 @@ public class RacerListParser {
     }
 
     public List<Racer> parseRacers() {
-        RacerParser parser = new RacerParser();
         Map<String, Racer> racers = fileReader.read(ABBREVIATIONS_FILE).stream()
-                .map(parser::parse)
+                .map(RacerParser::parse)
                 .collect(Collectors.toMap(racer -> racer.getRacerAbbreviation(), racer -> racer));
 
-        setTimeRace(START_FILE, racers, (racer, time) -> racer.setStartTimeRace(time));
-        setTimeRace(END_FILE, racers, (racer, time) -> racer.setEndTimeRace(time));
+        setTimeRaces(START_FILE, racers, (racer, time) -> racer.setStartTimeRace(time));
+        setTimeRaces(END_FILE, racers, (racer, time) -> racer.setEndTimeRace(time));
 
         return racers.values().stream().sorted((a, b) -> Long.compare(a.durationBestLap(), b.durationBestLap())).toList();
     }
 
-    private void setTimeRace(String fileName, Map<String, Racer> racer, BiConsumer<Racer, LocalTime> function) {
+    private void setTimeRaces(String fileName, Map<String, Racer> racer, BiConsumer<Racer, LocalTime> function) {
         fileReader.read(fileName).stream()
                 .forEach(line -> {
                     String key = line.substring(0, 3);

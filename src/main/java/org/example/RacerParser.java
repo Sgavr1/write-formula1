@@ -1,7 +1,7 @@
 package org.example;
 
 public class RacerParser {
-    public Racer parse(String line) {
+    public static Racer parse(String line) {
         if (line == null) {
             throw new IllegalArgumentException("Error parsing the passed string value Null");
         }
