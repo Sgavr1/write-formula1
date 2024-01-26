@@ -27,13 +27,13 @@ public class RacerListParser {
         return racers.values().stream().sorted((a, b) -> Long.compare(a.durationBestLap(), b.durationBestLap())).toList();
     }
 
-    private void setTimeRaces(String fileName, Map<String, Racer> racer, BiConsumer<Racer, LocalTime> function) {
+    private void setTimeRaces(String fileName, Map<String, Racer> racers, BiConsumer<Racer, LocalTime> function) {
         fileReader.read(fileName).stream()
                 .forEach(line -> {
                     String key = line.substring(0, 3);
                     String strTime = line.substring(14, line.length());
 
-                    function.accept(racer.get(key), LocalTime.parse(strTime));
+                    function.accept(racers.get(key), LocalTime.parse(strTime));
                 });
     }
 }
